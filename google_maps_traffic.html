@@ -1,44 +1,52 @@
+import streamlit as st
+import streamlit.components.v1 as components
+
+# Cargar la API key desde los secrets
+api_key = st.secrets["GOOGLE_API_KEY"]
+
+# HTML dinámico con la API Key inyectada
+html_content = f"""
 <!DOCTYPE html>
 <html>
   <head>
     <title>Google Maps con Tráfico en Tiempo Real</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAK53j9rvPP2rEOL8XLMjp6W3rkzLr2c2M&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={api_key}&libraries=places"></script>
     <style>
       /* Estilo para la leyenda */
-      .legend {
+      .legend {{
         background: white;
         padding: 10px;
         margin: 10px;
         border-radius: 5px;
         font-family: Arial, sans-serif;
         font-size: 12px;
-      }
-      .legend div {
+      }}
+      .legend div {{
         display: flex;
         align-items: center;
         margin-bottom: 5px;
-      }
-      .color-box {
+      }}
+      .color-box {{
         width: 20px;
         height: 20px;
         margin-right: 5px;
-      }
-      .green {
+      }}
+      .green {{
         background-color: green;
-      }
-      .yellow {
+      }}
+      .yellow {{
         background-color: yellow;
-      }
-      .red {
+      }}
+      .red {{
         background-color: red;
-      }
+      }}
     </style>
     <script>
-      function initMap() {
-        var mapOptions = {
+      function initMap() {{
+        var mapOptions = {{
           zoom: 8,  // Ajustar zoom para una vista más amplia
-          center: { lat: 28.3000, lng: -16.5000 }  // Coordenadas centradas para Tenerife
-        };
+          center: {{ lat: 28.3000, lng: -16.5000 }}  // Coordenadas centradas para Tenerife
+        }};
 
         var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
@@ -58,10 +66,15 @@
 
         // Colocar la leyenda en la parte inferior derecha
         map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
-      }
+      }}
     </script>
   </head>
   <body onload="initMap()">
     <div id="map" style="height: 600px; width: 100%;"></div>
   </body>
 </html>
+"""
+
+# Renderiza el contenido HTML en Streamlit
+components.html(html_content, height=600)
+
