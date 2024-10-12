@@ -225,14 +225,80 @@ def mostrar_ruta_en_mapa_con_trafico(ruta):
 # --------------------------- #
 #        6. Mapa de Tráfico     #
 # --------------------------- #
-
-# Mapa de tráfico en tiempo real con Google Maps JavaScript API
+# Título de la sección del mapa
 st.title("📍 Google Maps con Tráfico en Tiempo Real")
+# HTML dinámico con la API Key inyectada
+html_content = f"""
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Maps con Tráfico en Tiempo Real</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key={api_key}&callback=initMap" async defer></script>
+    <style>
+      /* Estilo para la leyenda */
+      .legend {{
+        background: white;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 5px;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+      }}
+      .legend div {{
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+      }}
+      .color-box {{
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+      }}
+      .green {{
+        background-color: green;
+      }}
+      .yellow {{
+        background-color: yellow;
+      }}
+      .red {{
+        background-color: red;
+      }}
+    </style>
+    <script>
+      function initMap() {{
+        var mapOptions = {{
+          zoom: 8,
+          center: {{ lat: 28.3000, lng: -16.5000 }}
+        }};
+        var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-with open('google_maps_traffic.html', 'r', encoding='utf-8') as f:
-    html_content = f.read()
+        // Añadir la capa de tráfico
+        var trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(map);
 
-components.html(html_content, height=600)
+        // Crear la leyenda manualmente
+        var legend = document.createElement('div');
+        legend.innerHTML = `
+          <div class="legend">
+            <div><div class="color-box green"></div>Tráfico Fluido</div>
+            <div><div class="color-box yellow"></div>Tráfico Moderado</div>
+            <div><div class="color-box red"></div>Tráfico Denso</div>
+          </div>
+        `;
+
+        // Colocar la leyenda en la parte inferior derecha
+        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+      }}
+    </script>
+  </head>
+  <body>
+    <div id="map" style="height: 600px; width: 100%;"></div>
+  </body>
+</html>
+"""
+
+# Renderizar el contenido HTML en Streamlit
+components.html(html_content, height=600, scrolling=True)
 
 # --------------------------- #
 #      7. Procesamiento Datos  #
