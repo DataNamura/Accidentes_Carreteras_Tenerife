@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Maps con Tráfico en Tiempo Real</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAK53j9rvPP2rEOL8XLMjp6W3rkzLr2c2M&libraries=places"></script>
+    <style>
+      /* Estilo para la leyenda */
+      .legend {
+        background: white;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 5px;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+      }
+      .legend div {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+      }
+      .color-box {
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+      }
+      .green {
+        background-color: green;
+      }
+      .yellow {
+        background-color: yellow;
+      }
+      .red {
+        background-color: red;
+      }
+    </style>
+    <script>
+      function initMap() {
+        var mapOptions = {
+          zoom: 8,  // Ajustar zoom para una vista más amplia
+          center: { lat: 28.3000, lng: -16.5000 }  // Coordenadas centradas para Tenerife
+        };
+
+        var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+        // Añadir la capa de tráfico
+        var trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(map);
+
+        // Crear la leyenda manualmente
+        var legend = document.createElement('div');
+        legend.innerHTML = `
+          <div class="legend">
+            <div><div class="color-box green"></div>Tráfico Fluido</div>
+            <div><div class="color-box yellow"></div>Tráfico Moderado</div>
+            <div><div class="color-box red"></div>Tráfico Denso</div>
+          </div>
+        `;
+
+        // Colocar la leyenda en la parte inferior derecha
+        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+      }
+    </script>
+  </head>
+  <body onload="initMap()">
+    <div id="map" style="height: 600px; width: 100%;"></div>
+  </body>
+</html>
