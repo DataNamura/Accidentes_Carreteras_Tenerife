@@ -34,7 +34,8 @@ import locale
 load_dotenv()
 
 # Obtener la clave de API de Google desde las variables de entorno
-API_KEY_GOOGLE = os.getenv("GOOGLE_API_KEY")
+API_KEY_GOOGLE = st.secrets["GOOGLE_API_KEY"]
+
 
 if not API_KEY_GOOGLE:
     st.error("⚠️ La clave de API de Google no está configurada. Por favor, establece la variable de entorno 'GOOGLE_API_KEY'.")
