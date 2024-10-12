@@ -4,13 +4,42 @@ import streamlit.components.v1 as components
 # Cargar la API key desde los secrets
 api_key = st.secrets["GOOGLE_API_KEY"]
 
-# HTML básico para cargar el mapa
+# HTML dinámico con la API Key inyectada
 html_content = f"""
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Mapa Básico</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key={api_key}"></script>
+    <title>Google Maps con Tráfico en Tiempo Real</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key={api_key}&callback=initMap" async defer></script>
+    <style>
+      .legend {{
+        background: white;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 5px;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+      }}
+      .legend div {{
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+      }}
+      .color-box {{
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+      }}
+      .green {{
+        background-color: green;
+      }}
+      .yellow {{
+        background-color: yellow;
+      }}
+      .red {{
+        background-color: red;
+      }}
+    </style>
     <script>
       function initMap() {{
         var mapOptions = {{
@@ -18,15 +47,32 @@ html_content = f"""
           center: {{ lat: 28.3000, lng: -16.5000 }}
         }};
         var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+        // Añadir la capa de tráfico
+        var trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(map);
+
+        // Crear la leyenda manualmente
+        var legend = document.createElement('div');
+        legend.innerHTML = `
+          <div class="legend">
+            <div><div class="color-box green"></div>Tráfico Fluido</div>
+            <div><div class="color-box yellow"></div>Tráfico Moderado</div>
+            <div><div class="color-box red"></div>Tráfico Denso</div>
+          </div>
+        `;
+
+        // Colocar la leyenda en la parte inferior derecha
+        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
       }}
     </script>
   </head>
-  <body onload="initMap()">
+  <body>
     <div id="map" style="height: 600px; width: 100%;"></div>
   </body>
 </html>
 """
 
-components.html(html_content, height=600)
-
+# Renderizar el contenido HTML en Streamlit
+components.html(html_content, height=600, scrolling=True)
 
