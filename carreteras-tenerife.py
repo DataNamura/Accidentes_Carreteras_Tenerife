@@ -222,11 +222,23 @@ def mostrar_ruta_en_mapa_con_trafico(ruta):
         return None
 
 
+
 # --------------------------- #
 #        6. Mapa de Tráfico     #
 # --------------------------- #
+
+
 # Título de la sección del mapa
 st.title("📍 Google Maps con Tráfico en Tiempo Real")
+
+# Obtener la API Key desde los secretos
+api_key = st.secrets["GOOGLE_API_KEY"]
+
+# Verificar que la API Key esté configurada
+if not api_key:
+    st.error("⚠️ La clave de API de Google no está configurada. Por favor, establece la variable de entorno 'GOOGLE_API_KEY'.")
+    st.stop()
+
 # HTML dinámico con la API Key inyectada
 html_content = f"""
 <!DOCTYPE html>
@@ -299,6 +311,7 @@ html_content = f"""
 
 # Renderizar el contenido HTML en Streamlit
 components.html(html_content, height=600, scrolling=True)
+
 
 # --------------------------- #
 #      7. Procesamiento Datos  #
