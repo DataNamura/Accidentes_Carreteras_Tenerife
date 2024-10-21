@@ -90,13 +90,11 @@ with st.expander("📊 Cómo usar la aplicación"):
 with st.expander("🗺️ Sección de Mapas"):
     st.markdown("""
     ### 1. Mapa de tráfico en tiempo real:
-    - En esta sección, puedes visualizar el tráfico actual en las carreteras seleccionadas gracias a la integración con Google Maps. 
-    - El mapa te muestra en tiempo real dónde hay más tráfico y te ayuda a entender cómo influye en los accidentes.
+    - En esta sección, puedes visualizar el tráfico actual en las carreteras de Tenerife gracias a la integración con Google Maps. 
+    - El mapa te muestra en tiempo real dónde hay más tráfico, con una leyenda que indica el nivel de tráfico.
 
     ### 2. Mapa interactivo de carreteras seleccionadas:
-    - Este mapa muestra las carreteras que seleccionaste en la barra lateral, junto con los tramos más afectados por accidentes. 
-    - Te permite explorar visualmente las zonas de mayor siniestralidad en Tenerife.
-    """)
+    - Este mapa muestra las carreteras que seleccionaste en la barra lateral de forma gráfica.
 
 # Desplegable para la sección de gráficos
 with st.expander("📊 Sección de Gráficos"):
