@@ -1058,7 +1058,7 @@ st.write(f"🔮 **Probabilidad promedio de que ocurra un accidente**: {avg_pred_
 
 # Explicación de los cálculos
 st.markdown("""
-**🔍 Explicación de los Cálculos**: Este valor es la probabilidad calculada de accidente usando los datos actuales (hora, día de la semana, tramo y tráfico). Refleja el riesgo general, pero no implica que siempre ocurra un accidente.
+**🔍 Explicación de los Cálculos**: Este valor es la probabilidad calculada de accidente usando los datos actuales (hora, día de la semana, carretera y tramo). Refleja el riesgo general, pero no implica que siempre ocurra un accidente.
 """)
 
 # Explicación de la precisión del modelo
