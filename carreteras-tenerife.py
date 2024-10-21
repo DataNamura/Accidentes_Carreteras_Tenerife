@@ -976,6 +976,8 @@ crear_grafico_10(df_filtrado_accidentes, total_accidentes_filtrado)
 #   12. Modelado y Predicción  #
 # --------------------------- #
 
+import pytz
+from datetime import datetime
 
 # Definir los días de la semana manualmente en español
 dias_semana_esp = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']
@@ -999,9 +1001,6 @@ def preprocess_data(df):
 # Llamada a la función para preprocesar los datos y obtener las variables codificadas
 df_model, le_carretera, le_tramo = preprocess_data(df)
 
-
-
-
 # Seleccionar características y etiqueta
 X = df_model[['carretera_nombre_encoded', 'tramo_nombre_encoded', 'hora', 'dia_semana']]
 y = df_model['es_accidente']
@@ -1017,19 +1016,18 @@ model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 
-
 # Predicción de accidente según los filtros seleccionados por el usuario
 st.header("🔮 Predicción de Accidente")
 
-# Obtener la hora y el día actual con minutos en formato español
-hora_actual = datetime.now().strftime('%H:%M')
-dia_semana_actual = dias_semana_esp[datetime.now().weekday()]  # Obtener el día en español de la lista
+# Obtener la hora y el día actual en hora canaria
+zona_horaria_canaria = pytz.timezone('Europe/Lisbon')  # Usar la zona horaria de Lisboa para Canarias
+hora_actual = datetime.now(zona_horaria_canaria).strftime('%H:%M')
+dia_semana_actual = dias_semana_esp[datetime.now(zona_horaria_canaria).weekday()]  # Obtener el día en español de la lista
 
 # Filtros para la predicción
 carretera_seleccionada = st.selectbox("🛣️ Selecciona una Carretera", df['carretera_nombre'].unique())
 tramos_disponibles = ['Seleccionar Todos'] + df[df['carretera_nombre'] == carretera_seleccionada]['tramo_nombre'].unique().tolist()
 tramo_seleccionado = st.selectbox("📍 Selecciona un Tramo", tramos_disponibles)
-
 
 # Verificar si se seleccionó "Seleccionar Todos" para tramos
 if tramo_seleccionado == 'Seleccionar Todos':
@@ -1045,9 +1043,8 @@ carreteras_encoded = le_carretera.transform([carretera_seleccionada])[0]
 input_data = pd.DataFrame({
     'carretera_nombre_encoded': np.repeat(carreteras_encoded, len(tramos_encoded)),
     'tramo_nombre_encoded': tramos_encoded,
-    'hora': np.repeat(datetime.now().hour, len(tramos_encoded)),
-    'dia_semana': np.repeat(datetime.now().weekday(), len(tramos_encoded)),
-    
+    'hora': np.repeat(datetime.now(zona_horaria_canaria).hour, len(tramos_encoded)),
+    'dia_semana': np.repeat(datetime.now(zona_horaria_canaria).weekday(), len(tramos_encoded)),
 })
 
 # Hacer la predicción
@@ -1069,7 +1066,8 @@ st.markdown(f"""
 **🎯 Precisión del Modelo**:
 La precisión muestra qué tan bien el modelo está funcionando en términos de clasificar correctamente los accidentes. Un valor de **{accuracy:.2f}** indica que el {accuracy*100:.0f}% de las veces, el modelo predijo correctamente si hubo o no un accidente.
 """)
-# Explicación precision modelo 2
+
+# Explicación precisión modelo 2
 st.markdown(f"""
 **🎯 Explicación de la precisión del modelo**: 
 Es importante tener en cuenta que la precisión de las predicciones del modelo puede verse afectada en ciertos tramos o carreteras debido a la falta de datos históricos suficientes. En estos casos, el modelo puede no tener la información necesaria para identificar patrones de accidentes y, como resultado, puede proporcionar probabilidades de accidente que sean muy bajas o incluso del **0%**.
@@ -1084,10 +1082,10 @@ def crear_barometro(avg_pred_prob, hora_actual, dia_semana_actual):
     st.subheader(f"🕒 Hora actual: {hora_actual} | 📅 Día: {dia_semana_actual}")
 
     fig = go.Figure(go.Indicator(
-        mode = "gauge+number",
-        value = avg_pred_prob * 100,  # Convertir a porcentaje
-        title = {'text': "Probabilidad de Accidente"},
-        gauge = {
+        mode="gauge+number",
+        value=avg_pred_prob * 100,  # Convertir a porcentaje
+        title={'text': "Probabilidad de Accidente"},
+        gauge={
             'axis': {'range': [0, 100], 'tickwidth': 1, 'tickcolor': "darkblue"},
             'bar': {'color': "black"},
             'steps': [
