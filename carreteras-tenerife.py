@@ -83,7 +83,7 @@ with st.expander("📊 Cómo usar la aplicación"):
     3. **⏰ Filtrar por hora del día**: 
        - Puedes ajustar el análisis para ver accidentes que ocurrieron en un rango de horas específico del día. Esto es útil si quieres analizar solo las horas pico o un periodo en particular.
        
-    Los filtros que seleccionas aquí determinarán los resultados que verás en las siguientes secciones de gráficos, mapas y predicción.
+    Los filtros que seleccionas aquí determinarán los resultados que verás en las siguientes secciones de gráficos y mapas.
     """)
 
 # Desplegable para la sección de mapas
