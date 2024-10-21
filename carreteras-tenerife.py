@@ -26,6 +26,7 @@ import os
 import plotly.graph_objects as go
 from datetime import datetime
 import locale
+
 # --------------------------- #
 # 2. Cargar Variables de Entorno #
 # --------------------------- #
@@ -36,7 +37,6 @@ load_dotenv()
 # Obtener la clave de API de Google desde las variables de entorno
 API_KEY_GOOGLE = st.secrets["GOOGLE_API_KEY"]
 
-
 if not API_KEY_GOOGLE:
     st.error("⚠️ La clave de API de Google no está configurada. Por favor, establece la variable de entorno 'GOOGLE_API_KEY'.")
     st.stop()
@@ -44,7 +44,6 @@ if not API_KEY_GOOGLE:
 # --------------------------- #
 #     3. Configuración Página    #
 # --------------------------- #
-
 
 # Configuración de la página
 st.set_page_config(page_title="🚗 Análisis de Accidentes en Carreteras", layout="wide")
@@ -95,6 +94,7 @@ with st.expander("🗺️ Sección de Mapas"):
 
     ### 2. Mapa interactivo de carreteras seleccionadas:
     - Este mapa muestra las carreteras que seleccionaste en la barra lateral de forma gráfica.
+    """)
 
 # Desplegable para la sección de gráficos
 with st.expander("📊 Sección de Gráficos"):
@@ -130,6 +130,7 @@ with st.expander("🔮 Sección de Predicción"):
     ### Barómetro de riesgo:
     - La predicción se muestra visualmente como un barómetro, indicando si el riesgo de accidente es bajo (verde), moderado (naranja), o alto (rojo).
     """)
+
 
 
 # --------------------------- #
