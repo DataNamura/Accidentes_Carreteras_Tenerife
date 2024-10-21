@@ -90,7 +90,7 @@ with st.expander("🗺️ Sección de Mapas"):
     st.markdown("""
     ### 1. Mapa de tráfico en tiempo real:
     - En esta sección, puedes visualizar el tráfico actual en las carreteras de Tenerife gracias a la integración con Google Maps. 
-    - El mapa te muestra en tiempo real dónde hay más tráfico, con una leyenda que indica el nivel de tráfico.
+    - El mapa te muestra en tiempo real la densidad de  tráfico en cada carretera, con una leyenda que indica el nivel de tráfico.
 
     ### 2. Mapa interactivo de carreteras seleccionadas:
     - Este mapa muestra las carreteras que seleccionaste en la barra lateral de forma gráfica.
@@ -125,10 +125,10 @@ with st.expander("🔮 Sección de Predicción"):
     - La aplicación te ofrece una estimación de la probabilidad de que ocurra un accidente en tiempo real. Esta predicción se basa en datos históricos y factores como el día de la semana, la hora, y el tramo de carretera que seleccionaste.
 
     ### Cómo funciona:
-    - Selecciona una carretera y un tramo en la barra lateral, y la aplicación calculará la probabilidad de que ocurra un accidente bajo las condiciones actuales (hora y día).
+    - Selecciona una carretera y un tramo en el filtro de la predicción, y la aplicación calculará la probabilidad de que ocurra un accidente bajo las condiciones actuales (hora y día).
     
     ### Barómetro de riesgo:
-    - La predicción se muestra visualmente como un barómetro, indicando si el riesgo de accidente es bajo (verde), moderado (naranja), o alto (rojo).
+    - La predicción se muestra visualmente como un barómetro, indicando si el riesgo de accidente es bajo (verde), moderado (naranja), o alto (rojo) y además muestra el % de riesgo de accidente.
     """)
 
 
