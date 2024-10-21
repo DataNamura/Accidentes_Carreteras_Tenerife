@@ -60,13 +60,6 @@ st.markdown("""
 Esta aplicación interactiva te permite analizar accidentes de tráfico en las carreteras de Tenerife entre **2010 y 2024**. Utiliza datos históricos y tecnología avanzada para visualizar mapas, obtener información en tiempo real sobre el tráfico, y predecir la probabilidad de accidentes en diferentes tramos de carretera.
 """)
 
-# Desplegable para las características principales
-with st.expander("🔍 Características principales"):
-    st.markdown("""
-    - **Análisis de accidentes**: Explora los accidentes de tráfico por carretera, hora del día, día de la semana, y más.
-    - **Predicción en tiempo real**: Obtén una predicción sobre la probabilidad de que ocurra un accidente en las condiciones actuales.
-    - **Visualización de tráfico en tiempo real**: Muestra el tráfico actual en las carreteras seleccionadas usando Google Maps.
-    """)
 
 # Desplegable para la barra lateral de filtros
 with st.expander("📊 Cómo usar la aplicación"):
